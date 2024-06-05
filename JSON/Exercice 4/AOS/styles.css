@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+section{
+    height: 100vh;
+}
+
+.first{
+    background-color: red;
+}
+
+.second{
+    background-color: blue;
+}
+
+.third{
+    background-color: cyan;
+}
+
+.fourth{
+    background-color: #fff; 
+}
