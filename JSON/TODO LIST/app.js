@@ -1,53 +1,46 @@
+// Get references to elements
 const todoInput = document.getElementById('todo-input');
-        const addButton = document.getElementById('add-button');
-        const todoItems = document.getElementById('todo-items');
+const addButton = document.getElementById('add-button');
+const todoList = document.getElementById('todo-items'); 
 
-        function loadTasks() {
-            const storedTasks = localStorage.getItem('toDoList');
-            if (storedTasks) {
-                const tasks = JSON.parse(storedTasks);
-                tasks.forEach(task => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = task;
+// Function to create a new task list item
+function createTaskItem(text) {
+  const listItem = document.createElement('li');
+  listItem.textContent = text;
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.addEventListener('click', () => {
+    todoList.removeChild(listItem);
+    saveTasks();
+  });
+  listItem.appendChild(deleteButton);
+  return listItem;
+}
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Supprimer';
-                    deleteButton.addEventListener('click', () => {
-                        todoItems.removeChild(listItem);
-                        saveTasks();
-                    });
+// Function to load tasks from localStorage
+function loadTasks() {
+  const storedTasks = localStorage.getItem('todoList');
+  if (storedTasks) {
+    const tasks = JSON.parse(storedTasks);
+    tasks.forEach(task => todoList.appendChild(createTaskItem(task)));
+  }
+}
 
-                    listItem.appendChild(deleteButton);
-                    todoItems.appendChild(listItem);
-                });
-            }
-        }
+// Function to save tasks to localStorage
+function saveTasks() {
+  const tasks = Array.from(todoList.children).map(listItem => listItem.textContent);
+  localStorage.setItem('todoList', JSON.stringify(tasks));
+}
 
-        function saveTasks() {
-            const tasks = Array.from(todoItems.children).map(listItem => listItem.textContent);
-            localStorage.setItem('toDoList', JSON.stringify(tasks));
-        }
+// Load tasks on page load
+loadTasks();
 
-        loadTasks();
-
-        addButton.addEventListener('click', () => {
-            const todoText = todoInput.value.trim();
-
-            if (todoText) {
-                const listItem = document.createElement('li');
-                listItem.textContent = todoText;
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Supprimer';
-                deleteButton.addEventListener('click', () => {
-                    todoItems.removeChild(listItem);
-                    saveTasks();
-                });
-
-                listItem.appendChild(deleteButton);
-                todoItems.appendChild(listItem);
-
-                todoInput.value = '';
-                saveTasks(); // Sauvegarde de la nouvelle tâche
-            }
-        });
+// Add task on button click
+addButton.addEventListener('click', () => {
+  const todoText = todoInput.value.trim();
+  if (todoText) {
+    todoList.appendChild(createTaskItem(todoText));
+    todoInput.value = '';
+    saveTasks();
+  }
+});
