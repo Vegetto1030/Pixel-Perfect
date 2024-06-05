@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#first-section {
+  background-color: red;
+  height: 200vh;
+}
+
+#second-section {
+  background-color: blue;
+  height: 100vh;
+}
+
+.waypoint-active {
+  background-color: lightgreen;
+}/*# sourceMappingURL=styles.css.map */
