@@ -61,6 +61,7 @@ main .meal {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
   cursor: pointer;
+  max-width: 300px;
 }
 main .meal:hover {
   transform: translateY(-5px);
